@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Girl Walk — App Health Report</title>
+<style>
+  :root { --bg:#0f1117; --card:#1a1d27; --fg:#f5f6fa; --muted:#9aa0ad;
+          --good:#3ecf8e; --warn:#f5a623; --bad:#ff5c5c; --accent:#7c5cff; }
+  * { box-sizing:border-box; }
+  body { margin:0; }
+  .wrap { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+          background:var(--bg); color:var(--fg); padding:24px; }
+  .container { max-width:1100px; margin:0 auto; }
+  h1 { font-size:28px; margin:0 0 4px; }
+  .sub { color:var(--muted); margin-bottom:24px; }
+  .verdict { display:inline-block; padding:6px 14px; border-radius:999px;
+             font-weight:600; }
+  .verdict.good{background:rgba(62,207,142,.15);color:var(--good);}
+  .verdict.warn{background:rgba(245,166,35,.15);color:var(--warn);}
+  .verdict.bad{background:rgba(255,92,92,.15);color:var(--bad);}
+  .grid { display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
+  .card { background:var(--card); border-radius:14px; padding:18px; }
+  .card h2 { font-size:13px; text-transform:uppercase; letter-spacing:.06em;
+             color:var(--muted); margin:0 0 12px; }
+  .big { font-size:32px; font-weight:700; }
+  .delta.up{color:var(--good);} .delta.down{color:var(--bad);}
+  .scroll { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th,td { text-align:left; padding:8px 10px; border-bottom:1px solid #262a36; }
+  .nodata { color:var(--muted); font-style:italic; padding:12px 0; }
+  .rec { padding:12px; border-left:3px solid var(--accent); background:#161922;
+         border-radius:0 10px 10px 0; margin-bottom:10px; }
+  .rec .p1{color:var(--bad);} .rec .p2{color:var(--warn);} .rec .p3{color:var(--muted);}
+  section { margin:28px 0; }
+  code { background:#262a36; padding:1px 5px; border-radius:4px; font-size:12px; }
+</style>
+</head>
+<body>
+<div class="wrap"><div class="container">
+
+  <h1>Girl Walk — App Health Report</h1>
+  <div class="sub">Data window: Jun 15–22, 2026 (rolling 7 days · last day partial) · source: Mixpanel project 3972949 · generated 2026-06-22</div>
+
+  <!-- SECTION 1: EXECUTIVE SUMMARY -->
+  <section id="summary">
+    <span class="verdict good">Healthy — strong engaged-user retention &amp; a solid ~24% paywall conversion</span>
+    <div class="grid" style="margin-top:16px">
+      <div class="card"><h2>Engaged D1</h2><div class="big">86%</div><div class="sub">home_screen_viewed self-retention</div></div>
+      <div class="card"><h2>Paywall → sub</h2><div class="big">24.3%</div><div class="sub">365 of 1,499 viewers</div></div>
+      <div class="card"><h2>New installs / day</h2><div class="big">~199</div><div class="sub">install-cohort D1 9%</div></div>
+      <div class="card"><h2>Onboarding completes</h2><div class="big">1,131</div><div class="sub">over the window</div></div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: RETENTION -->
+  <section id="retention"><div class="card"><h2>Engaged-User Retention</h2>
+    <div class="scroll"><table>
+      <tr><th>Metric</th><th>D1</th><th>D2</th><th>D7</th></tr>
+      <tr><td>home_screen_viewed self-retention ($average)</td><td>86%</td><td>78%</td><td>~46%*</td></tr>
+    </table></div>
+    <p class="sub" style="margin-top:10px">Anchor event <code>home_screen_viewed</code>. *Only the Jun 15 cohort has a complete 7-day window (D7 = 46%); the averaged D7 is diluted by incomplete later cohorts and is not weighted here. Measures users who are already engaged enough to open the app.</p>
+  </div></section>
+
+  <!-- SECTION 3: NEW VS RETURNING -->
+  <section id="cohorts"><div class="card"><h2>New vs Returning (install cohort)</h2>
+    <div class="scroll"><table>
+      <tr><th>Cohort</th><th>Scale</th><th>D1</th><th>D2</th><th>D7</th></tr>
+      <tr><td>New installs (this window)</td><td>~199/day</td><td>9%</td><td>6%</td><td>3%*</td></tr>
+      <tr><td>Returning / existing base</td><td>—</td><td colspan="3" class="nodata">retention not isolable via Mixpanel Run-Query (requires a saved cohort)</td></tr>
+    </table></div>
+    <p class="sub" style="margin-top:10px">New-install D1 (9%) covers <em>everyone</em> who installs — most churn on day one. The 86% engaged-user D1 above measures a different, already-committed population. Both are real and answer different questions. *D7 incomplete.</p>
+  </div></section>
+
+  <!-- SECTION 4: PAYWALL FUNNEL -->
+  <section id="funnel"><div class="card"><h2>Superwall &amp; Subscription Funnel</h2>
+    <div class="scroll"><table>
+      <tr><th>Step</th><th>Unique users / 7d</th><th>Rate</th></tr>
+      <tr><td>SuperWall Paywall Viewed (impression)</td><td>1,499</td><td>—</td></tr>
+      <tr><td>SW_subscription_started (conversion)</td><td>365</td><td class="delta up">24.3%</td></tr>
+      <tr><td>SuperWall Paywall Dismissed</td><td>623</td><td class="delta down">41.6% dismissed</td></tr>
+      <tr><td>subscription_renewed</td><td>26</td><td>—</td></tr>
+      <tr><td>Trial Converted</td><td>2</td><td>—</td></tr>
+    </table></div>
+    <p class="sub" style="margin-top:10px">Funnel uses Superwall's auto-piped events. The custom <code>paywall_shown</code> (10/wk) fires on only a subset of flows and is not the true impression count.</p>
+  </div></section>
+
+  <!-- SECTION 5: LIKES -->
+  <section id="likes"><div class="card"><h2>What Users Like (engagement, unique users / 7d)</h2>
+    <div class="scroll"><table>
+      <tr><th>Feature</th><th>Unique users</th><th>Signal</th></tr>
+      <tr><td>Home screen</td><td>719</td><td>highest reach</td></tr>
+      <tr><td>Workouts tab</td><td>173</td><td>top secondary tab</td></tr>
+      <tr><td>Progress tab</td><td>154</td><td>strong</td></tr>
+      <tr><td>Community tab</td><td>127</td><td>moderate</td></tr>
+      <tr><td>Challenges tab</td><td>116</td><td>moderate</td></tr>
+      <tr><td>Workout Finished</td><td>19</td><td>low completion volume</td></tr>
+      <tr><td>Community post opened</td><td>4</td><td>low</td></tr>
+      <tr><td>Medal tapped</td><td>3</td><td>low</td></tr>
+    </table></div>
+  </div></section>
+
+  <!-- SECTION 6: DISLIKES -->
+  <section id="dislikes"><div class="card"><h2>Friction &amp; Drop-off</h2>
+    <div class="scroll"><table>
+      <tr><th>Friction point</th><th>Value</th><th>Detail</th></tr>
+      <tr><td>Workout exits before 20% complete</td><td class="delta down">76%</td><td>39 of 51 exits quit in the first fifth</td></tr>
+      <tr><td>Paywall dismissed</td><td class="delta down">41.6%</td><td>623 of 1,499 viewers</td></tr>
+      <tr><td>New-install day-1 churn</td><td class="delta down">91%</td><td>only 9% return on D1</td></tr>
+      <tr><td>Medals / community engagement</td><td class="delta down">very low</td><td>3–4 users touched them</td></tr>
+    </table></div>
+    <p class="sub" style="margin-top:10px">Per-screen onboarding drop-off is trackable via versioned <code>onboarding_[vX.XX]_N_…_completed</code> events (1–18) for a future deep-dive.</p>
+  </div></section>
+
+  <!-- SECTION 7: RECOMMENDATIONS -->
+  <section id="recs"><div class="card"><h2>Recommendations</h2>
+    <div class="rec"><span class="p1">● P1</span> &nbsp;<strong>Workout launch friction:</strong> 76% of workout exits happen before 20% completion. Investigate the first section's onboarding/audio/loading — this is the single biggest leak.</div>
+    <div class="rec"><span class="p2">● P2</span> &nbsp;<strong>New-install day-1 churn (91%):</strong> the first session isn't converting installers into returners. Strengthen the first-run hook and a day-1 re-engagement push.</div>
+    <div class="rec"><span class="p3">● P3</span> &nbsp;<strong>Social/medals underused</strong> (3–4 users): either surface them more prominently or de-prioritize. The ~24% paywall conversion is healthy — protect it.</div>
+  </div></section>
+
+  <p class="sub" style="margin-top:32px;font-size:12px">Static snapshot. Numbers are real Mixpanel figures for the stated window; the last day is partial and some cohorts are incomplete.</p>
+
+</div></div>
+</body>
+</html>
